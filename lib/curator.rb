@@ -38,7 +38,6 @@ class Curator
     CSV.foreach(file, headers: true,:header_converters => :symbol) do |row|
       @photographs << Photograph.new(row.to_h)
     end
-    require "pry"; binding.pry
   end
 
   def load_artists(file)
@@ -46,6 +45,28 @@ class Curator
       @artists << Artist.new(row.to_h)
     end
   end
+
+  def photographs_taken_between(range)
+    @photographs.select { |photo| range.include?(photo.year.to_i) }
+  end
+
+  def artists_photographs_by_age(artist)
+    photos_by_age = {}
+    photos = @photographs.select { |photo| photo.artist_id == artist.id}
+    photos.each do |photo|
+      photos_by_age[(photo.year.to_i - artist.born.to_i)] = photo.name
+    end
+    photos_by_age
+  end
+
+
+
+
+
+
+
+
+
 
 
 end
