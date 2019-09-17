@@ -59,14 +59,4 @@ class Curator
     photos_by_age
   end
 
-
-
-
-
-
-
-
-
-
-
 end
