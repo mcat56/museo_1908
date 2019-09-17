@@ -1,3 +1,5 @@
+require 'csv'
+
 class Curator
   attr_reader :artists, :photographs
 
@@ -30,6 +32,18 @@ class Curator
   def photographs_taken_by_artist_from(country)
     artists = @artists.select {|artist| artist.country == country}.map {|artist| artist.id}
     @photographs.select {|photograph| artists.include?(photograph.artist_id)}
+  end
+
+  def load_photographs(file)
+    CSV.foreach(file, headers: true) do |row|
+      @photographs << row
+    end
+  end
+
+  def load_artists(file)
+    CSV.foreach(file, headers: true) do |row|
+      @artists << row
+    end
   end
 
 
