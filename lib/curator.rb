@@ -28,9 +28,9 @@ class Curator
   end
 
   def photographs_taken_by_artist_from(country)
-    artists = @artists.select {|artist| artist.country == country}
-    require "pry"; binding.pry
-    artists
+    artists = @artists.select {|artist| artist.country == country}.map {|artist| artist.id}
+    @photographs.select {|photograph| artists.include?(photograph.artist_id)}
+  end
 
 
 end
