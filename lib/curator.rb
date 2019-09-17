@@ -35,14 +35,15 @@ class Curator
   end
 
   def load_photographs(file)
-    CSV.foreach(file, headers: true) do |row|
-      @photographs << row
+    CSV.foreach(file, headers: true,:header_converters => :symbol) do |row|
+      @photographs << Photograph.new(row.to_h)
     end
+    require "pry"; binding.pry
   end
 
   def load_artists(file)
-    CSV.foreach(file, headers: true) do |row|
-      @artists << row
+    CSV.foreach(file, headers: true, :header_converters => :symbol ) do |row|
+      @artists << Artist.new(row.to_h)
     end
   end
 
